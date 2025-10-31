@@ -168,7 +168,8 @@ class Game {
             const stats = CARD_TYPES[cardType];
             const div = document.createElement('div');
             const safeName = cardType.replace(/\s+/g, '');
-            const imageName = cardType.toLowerCase().replace(/\s+/g, '');
+            // Wall uses cobblestone.png image
+            const imageName = cardType === "Wall" ? "cobblestone" : cardType.toLowerCase().replace(/\s+/g, '');
             div.className = `deck-card deck-card-${safeName}`;
             
             if (index < p1CardsDrawn) {
@@ -212,7 +213,8 @@ class Game {
             const stats = CARD_TYPES[cardType];
             const div = document.createElement('div');
             const safeName = cardType.replace(/\s+/g, '');
-            const imageName = cardType.toLowerCase().replace(/\s+/g, '');
+            // Wall uses cobblestone.png image
+            const imageName = cardType === "Wall" ? "cobblestone" : cardType.toLowerCase().replace(/\s+/g, '');
             div.className = `deck-card deck-card-${safeName}`;
             
             if (index < p2CardsDrawn) {
@@ -447,11 +449,17 @@ class Game {
         const queue = [];
         
         this.player1.getActiveCards().forEach(card => {
-            queue.push({ card, attacker: this.player1, defender: this.player2 });
+            // Skip cards with 0 attack (like Wall)
+            if (card.attack > 0) {
+                queue.push({ card, attacker: this.player1, defender: this.player2 });
+            }
         });
         
         this.player2.getActiveCards().forEach(card => {
-            queue.push({ card, attacker: this.player2, defender: this.player1 });
+            // Skip cards with 0 attack (like Wall)
+            if (card.attack > 0) {
+                queue.push({ card, attacker: this.player2, defender: this.player1 });
+            }
         });
         
         queue.sort((a, b) => {
@@ -469,14 +477,38 @@ class Game {
         if (targets.length === 0) return null;
         
         const attacker = this.player1.field.includes(card) ? this.player1 : this.player2;
+        
+        const walls = targets.filter(t => t.name === "Wall");
+        const nonWallTargets = targets.filter(t => t.name !== "Wall");
+        
+        // Knights prioritize Walls ONLY if there are at least 2 Knights on the field
+        if (card.name === "Knight") {
+            const knightsOnField = attacker.field.filter(c => c && c.name === "Knight" && c.currentHp > 0).length;
+            if (walls.length > 0 && knightsOnField >= 2) {
+                // If multiple walls, use normal targeting strategy to pick one
+                const strategy = attacker.targetStrategy;
+                if (strategy === 'target-mana') {
+                    return this.findTargetByMana(walls);
+                } else if (strategy === 'optimize-damage') {
+                    return this.findTargetOptimizeDamage(card, walls);
+                } else { // 'kill-shot' or default
+                    return this.findTargetKillShot(card, walls);
+                }
+            }
+        }
+        
+        // For all other units (and Knights if no Walls exist or less than 2 Knights), exclude Walls from targets
+        // If no non-Wall targets exist, return null (will attack player directly)
+        if (nonWallTargets.length === 0) return null;
+        
         const strategy = attacker.targetStrategy;
         
         if (strategy === 'target-mana') {
-            return this.findTargetByMana(targets);
+            return this.findTargetByMana(nonWallTargets);
         } else if (strategy === 'optimize-damage') {
-            return this.findTargetOptimizeDamage(card, targets);
+            return this.findTargetOptimizeDamage(card, nonWallTargets);
         } else { // 'kill-shot' or default
-            return this.findTargetKillShot(card, targets);
+            return this.findTargetKillShot(card, nonWallTargets);
         }
     }
     
@@ -1116,7 +1148,8 @@ class Game {
         if (shouldSlide) cardDiv.classList.add('card-sliding');
         cardDiv.dataset.cardId = card.id;
         
-        const imageName = card.name.toLowerCase().replace(/\s+/g, '');
+        // Wall uses cobblestone.png image
+        const imageName = card.name === "Wall" ? "cobblestone" : card.name.toLowerCase().replace(/\s+/g, '');
         const healthPercent = (card.currentHp / card.maxHp) * 100;
         const healthBarColor = healthPercent > 60 ? '#51cf66' : healthPercent > 30 ? '#ffd43b' : '#ff6b6b';
         
@@ -1130,7 +1163,7 @@ class Game {
                 <img src="images/mana.png" alt="Mana" class="card-mana-icon">
                 <span class="card-mana-value">${card.cost}</span>
             </div>
-            ${!card.hasAttacked ? '<div class="card-attack-indicator"><img src="images/swords.png" alt="Ready" class="attack-icon"></div>' : ''}
+            ${!card.hasAttacked && card.attack > 0 ? '<div class="card-attack-indicator"><img src="images/swords.png" alt="Ready" class="attack-icon"></div>' : ''}
             <div class="card-name">${card.name}</div>
             <div class="card-image-container">
                 <img src="images/${imageName}.png" alt="${card.name}" class="card-image" onerror="this.style.display='none'">

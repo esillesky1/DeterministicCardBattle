@@ -1,4 +1,34 @@
 // Top
+function createPlayer1Deck() {
+    return {
+        type: 'hardy',
+        targetStrategy: 'kill-shot',
+        cards: [
+            "Goblin", 
+            "Goblin", 
+            "Goblin", 
+            "Skeleton",
+            "Skeleton",
+            "Archer",
+            "Goblin",
+            "Wall", 
+            "Wall", 
+            "Archer", 
+            "Archer", 
+            "Knight", 
+            "Wizard", 
+            "Knight",
+            "Wall", 
+            "Wizard", 
+            "Wall", 
+            "Archer", 
+            "Wall", 
+            "Archer",
+        ]
+    };
+}
+
+// Bottom
 function createPlayer2Deck() {
     return {
         type: 'hardy',
@@ -7,53 +37,23 @@ function createPlayer2Deck() {
             "Goblin", 
             "Goblin", 
             "Goblin", 
-            "Goblin",
-            "Goblin",
-            "Goblin",
-            "Goblin",
-            "Archer", 
-            "Skeleton", 
-            "Goblin", 
-            "Goblin", 
-            "Wizard",
-            "Goblin", 
-            "Goblin", 
-            "Archer", 
-            "Goblin",
-            "Wizard", 
-            "Goblin", 
-            "Goblin", 
-            "Knight",
-        ]
-    };
-}
-
-// Bottom
-function createPlayer1Deck() {
-    return {
-        type: 'hardy',
-        targetStrategy: 'target-mana',
-        cards: [
-            "Goblin", 
-            "Goblin", 
-            "Goblin", 
-            "Goblin",
-            "Goblin",
-            "Goblin",
+            "Skeleton",
+            "Skeleton",
+            "Archer",
             "Goblin",
             "Archer", 
             "Skeleton", 
-            "Goblin", 
-            "Goblin", 
-            "Wizard",
-            "Goblin", 
-            "Goblin", 
-            "Archer", 
-            "Goblin",
+            "Knight", 
+            "Wall", 
+            "Knight", 
             "Wizard", 
-            "Goblin", 
-            "Goblin", 
             "Knight",
+            "Wall", 
+            "Wizard", 
+            "Wall", 
+            "Archer", 
+            "Wall", 
+            "Archer",
         ]
     };
 }

@@ -80,7 +80,8 @@ async function showValidationModal(p1Deck, p2Deck, errors) {
         
         p1Deck.forEach((cardType, index) => {
             const stats = CARD_TYPES[cardType];
-            const imageName = cardType.toLowerCase().replace(/\s+/g, '');
+            // Wall uses cobblestone.png image
+            const imageName = cardType === "Wall" ? "cobblestone" : cardType.toLowerCase().replace(/\s+/g, '');
             const card = document.createElement('div');
             card.className = 'scroll-card';
             if (!stats) {
@@ -102,7 +103,8 @@ async function showValidationModal(p1Deck, p2Deck, errors) {
         
         p2Deck.forEach((cardType, index) => {
             const stats = CARD_TYPES[cardType];
-            const imageName = cardType.toLowerCase().replace(/\s+/g, '');
+            // Wall uses cobblestone.png image
+            const imageName = cardType === "Wall" ? "cobblestone" : cardType.toLowerCase().replace(/\s+/g, '');
             const card = document.createElement('div');
             card.className = 'scroll-card';
             if (!stats) {
