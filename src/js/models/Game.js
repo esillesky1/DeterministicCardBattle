@@ -811,6 +811,7 @@ class Game {
             
             attackerElement.classList.add('attacking');
             sfx.play('sine', { volume: 1.0 });
+            sfx.play('sine', { volume: 1.0 });
             this.log(`⚔️ ${attacker.name}'s ${card.name} prepares to attack...`, true);
             await this.sleep(400);
             
@@ -821,6 +822,7 @@ class Game {
                 
                 if (targetElement) {
                     targetElement.classList.add('being-targeted');
+                    sfx.play('sine', { volume: 1.0 });
                     sfx.play('sine', { volume: 1.0 });
                     await this.sleep(300);
                     
