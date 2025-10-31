@@ -149,8 +149,12 @@ Each card can have a **flavor** modifier that adjusts its stats:
 | Archer   | 90  | 44     | 30    | 4    | Midrange sniper            |
 
 | Wizard   | 120 | 82     | 25    | 6    | Heavy ranged damage dealer |
-
+| Wall     | 1500 | 0      | 0     | 6    | Pure defensive tank        |
 | Knight   | 244 | 127    | 20    | 8    | Tanky, high-impact closer  |
+
+
+
+**Note on Wall:** Wall is a pure defensive unit with 0 Attack and 0 Speed, meaning it does not participate in combat. Most units ignore Walls when selecting targets, but Knights (when there are at least 2 Knights on the field) will prioritize attacking Walls.
 
 
 

@@ -10,7 +10,7 @@ class Card {
         
         // Apply deck-type boosts
         this.deckType = deckType;
-        if (deckType === 'speedy') {
+        if (deckType === 'speedy' && cardType != "Wall") {
             this.speed += 6;
         } else if (deckType === 'hardy') {
             this.maxHp = Math.round(this.maxHp * 1.21);

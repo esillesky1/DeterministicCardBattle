@@ -4,7 +4,7 @@ const CARD_TYPES = {
     "Archer": { name: "Archer", hp: 90, attack: 44, speed: 30, cost: 4 },
     "Wizard": { name: "Wizard", hp: 120, attack: 82, speed: 25, cost: 6 },
     "Knight": { name: "Knight", hp: 200, attack: 100, speed: 20, cost: 8 },
-    "Wall": { name: "Wall", hp: 1500, attack: 0, speed: 0, cost: 6 },
+    "Wall": { name: "Wall", hp: 1000, attack: 0, speed: 0, cost: 6 },
 };
 
 const TEAM_NAMES = {
