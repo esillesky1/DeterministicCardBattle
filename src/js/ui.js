@@ -58,6 +58,7 @@ function validateDecks(p1DeckObj, p2DeckObj) {
 
 async function showValidationModal(p1Deck, p2Deck, errors) {
     return new Promise((resolve) => {
+        sfx.play('cardShuffle', { duration: 1200, startTime: 0.2 });
         const overlay = document.createElement('div');
         overlay.className = 'validation-overlay';
         
@@ -148,6 +149,7 @@ async function showValidationModal(p1Deck, p2Deck, errors) {
                     <div class="result-title success">GAME ON</div>
                     <div class="result-message">All decks are valid</div>
                 `;
+                sfx.play('unsheath', {volume: 0.3});
             }
             
             container.innerHTML = '';
@@ -167,6 +169,9 @@ async function showValidationModal(p1Deck, p2Deck, errors) {
 }
 
 async function startGame() {
+    // Stop any existing music before starting a new game
+    sfx.stopMusic();
+    
     globalCardId = 0;
     turnInProgress = true;
     autoplayActive = false;
@@ -187,6 +192,9 @@ async function startGame() {
     game = new Game(p1DeckObj, p2DeckObj, Date.now());
     
     updateButtonVisibility(true);
+    
+    // Start music for the new game
+    sfx.playMusic();
     
     await game.firstTurn();
     
@@ -319,6 +327,9 @@ function resetGameState() {
     autoplayActive = false;
     fastAutoMode = false;
     
+    // Stop music when resetting game state
+    sfx.stopMusic();
+    
     document.getElementById('turnInfo').textContent = 'Click "Start New Game" to begin';
     document.getElementById('player1Field').innerHTML = '';
     document.getElementById('player2Field').innerHTML = '';
@@ -380,6 +391,33 @@ document.addEventListener('keydown', (event) => {
         if (game && !game.winner) {
             toggleAutoplay();
         }
+    }
+});
+
+function toggleVolumeDropdown() {
+    const dropdown = document.getElementById('volumeDropdown');
+    dropdown.classList.toggle('active');
+}
+
+function updateSFXVolume(value) {
+    const volume = value / 100;
+    sfx.setVolume(volume);
+    document.getElementById('sfxVolumeValue').textContent = `${value}%`;
+}
+
+function updateMusicVolume(value) {
+    const volume = value / 100;
+    sfx.setMusicVolume(volume);
+    document.getElementById('musicVolumeValue').textContent = `${value}%`;
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', (event) => {
+    const volumeControl = document.querySelector('.volume-control');
+    const dropdown = document.getElementById('volumeDropdown');
+    
+    if (volumeControl && !volumeControl.contains(event.target) && dropdown.classList.contains('active')) {
+        dropdown.classList.remove('active');
     }
 });
 

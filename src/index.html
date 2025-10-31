@@ -39,10 +39,20 @@
                 </div>
                 <div class="turn-info-container">
                     <div class="turn-info" id="turnInfo">Click "Start New Game" to begin</div>
-                    <div class="debug-controls">
-                        <button class="btn-debug" onclick="debugP1Win()">P1 Win</button>
-                        <button class="btn-debug" onclick="debugP2Win()">P2 Win</button>
-                        <button class="btn-debug" onclick="debugDraw()">Draw</button>
+                    <div class="volume-control">
+                        <button class="volume-toggle" id="volumeToggle" onclick="toggleVolumeDropdown()">🔊</button>
+                        <div class="volume-dropdown" id="volumeDropdown">
+                            <div class="volume-slider-group">
+                                <label for="sfxVolume">SFX</label>
+                                <input type="range" id="sfxVolume" min="0" max="100" value="50" oninput="updateSFXVolume(this.value)">
+                                <span class="volume-value" id="sfxVolumeValue">50%</span>
+                            </div>
+                            <div class="volume-slider-group">
+                                <label for="musicVolume">Music</label>
+                                <input type="range" id="musicVolume" min="0" max="100" value="30" oninput="updateMusicVolume(this.value)">
+                                <span class="volume-value" id="musicVolumeValue">30%</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -96,6 +106,7 @@
 
     <script src="js/utils.js"></script>
     <script src="js/constants.js"></script>
+    <script src="js/sfx.js"></script>
     <script src="js/models/Card.js"></script>
     <script src="js/models/Player.js"></script>
     <script src="js/models/Game.js"></script>

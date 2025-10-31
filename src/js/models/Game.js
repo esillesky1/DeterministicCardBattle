@@ -52,6 +52,7 @@ class Game {
                 if (diff > 0) {
                     const cardElement = this.getCardElement(goblin);
                     if (cardElement) {
+                        sfx.play('bubbleBoing', {volume: 0.1});
                         this.showAnimatedText(cardElement, `+${diff}`, 'damage-number', '24px', '#27ae60');
                     }
                 }
@@ -95,6 +96,7 @@ class Game {
                 if (diff > 0) {
                     const cardElement = this.getCardElement(skeleton);
                     if (cardElement) {
+                        sfx.play('bubbleBoing');
                         this.showAnimatedText(cardElement, `+${diff}`, 'mana-gain', '24px', '#51cf66');
                     }
                 }
@@ -285,11 +287,13 @@ class Game {
             const nextCard = player.deck[0];
             
             if (player.canAfford(nextCard)) {
+                sfx.play('drawCard');
                 await this.animateCardDraw(prefix);
                 const card = player.drawCard();
                 player.spendMana(card.cost);
                 
                 player.placeCard(card);
+                sfx.play('placeCard');
                 drawnCards++;
                 
                 this.showManaCost(prefix, card.cost);
@@ -385,6 +389,7 @@ class Game {
             if (disadvantagedPlayer.canAfford(nextCard)) {
                 await this.animateCardDraw(playerPrefix);
                 const card = disadvantagedPlayer.drawCard();
+                sfx.play('placeCard');
                 disadvantagedPlayer.spendMana(card.cost);
                 
                 disadvantagedPlayer.placeCard(card);
@@ -667,6 +672,7 @@ class Game {
         
         gameBoard.appendChild(arrow);
         
+        sfx.play('woosh', { startTime: 0.2, volume: 0.3 });
         this.setTimeout(() => arrow.classList.add('animating'), 10);
         
         const duration = fastAutoMode ? 300 : 600;
@@ -735,6 +741,7 @@ class Game {
     async showManaGain(playerPrefix, manaGain) {
         const manaDisplay = document.getElementById(`${playerPrefix}ManaText`).parentElement;
         this.showAnimatedText(manaDisplay, `+${manaGain}`, 'mana-gain', '28px', '#51cf66');
+        sfx.play('manaGain');
     }
 
     async showCannotAfford(playerPrefix) {
@@ -743,6 +750,7 @@ class Game {
         const nextCard = list.querySelector('.next-card');
         
         if (nextCard) {
+            sfx.play('noDraw', {startTime: 0.2});
             nextCard.classList.add('cannot-afford');
             await this.sleep(800);
             nextCard.classList.remove('cannot-afford');
@@ -802,6 +810,7 @@ class Game {
             if (!attackerElement) continue;
             
             attackerElement.classList.add('attacking');
+            sfx.play('sine', { volume: 1.0 });
             this.log(`⚔️ ${attacker.name}'s ${card.name} prepares to attack...`, true);
             await this.sleep(400);
             
@@ -812,6 +821,7 @@ class Game {
                 
                 if (targetElement) {
                     targetElement.classList.add('being-targeted');
+                    sfx.play('sine', { volume: 1.0 });
                     await this.sleep(300);
                     
                     await this.createAttackArrow(attackerElement, targetElement, defender, card);
@@ -821,6 +831,8 @@ class Game {
                     await this.sleep(600);
                     
                     const died = target.takeDamage(card.attackEff);
+                    
+                    sfx.play('damage', { volume: 0.4 });
                     
                     targetElement.classList.remove('being-targeted');
                     targetElement.classList.add('taking-damage');
@@ -877,6 +889,8 @@ class Game {
                 await this.sleep(600);
                 
                 defender.hp -= card.attackEff;
+                sfx.play('homeExplode', {duration: 2000, startTime: 0.5} );
+                sfx.play('damage', { volume: 0.1 });
                 await this.showDirectDamage(defender.name, card.attackEff);
                 this.log(`${defender.name}: ${defender.hp} HP remaining`);
                 this.updateDisplay();
@@ -935,6 +949,11 @@ class Game {
     }
 
     async showWinner() {
+        if (this.winner !== "DRAW") {
+            sfx.play('applause');
+            sfx.play('fanfare');
+        }
+        
         const overlay = document.createElement('div');
         overlay.className = 'win-overlay';
         overlay.id = 'winOverlay';
@@ -1089,7 +1108,9 @@ class Game {
         const cardDiv = document.createElement('div');
         const safeName = card.name.replace(/\s+/g, '');
         cardDiv.className = `card card-type-${safeName}`;
-        if (isNewCard) cardDiv.classList.add('card-entering');
+        if (isNewCard) {
+            cardDiv.classList.add('card-entering');
+        }
         if (shouldSlide) cardDiv.classList.add('card-sliding');
         cardDiv.dataset.cardId = card.id;
         
@@ -1151,6 +1172,7 @@ class Game {
         if (statElement) {
             statElement.style.setProperty('--stat-glow-color', glowColor);
             statElement.classList.add('stat-animating');
+            sfx.play('smallUnsheath');
             
             await this.sleep(800);
             
@@ -1162,6 +1184,7 @@ class Game {
         const cardElement = this.getCardElement(card);
         if (cardElement) {
             cardElement.classList.add('card-dying');
+            sfx.play('demonDeath', {volume: 0.6});
             await this.sleep(800);
         }
     }
