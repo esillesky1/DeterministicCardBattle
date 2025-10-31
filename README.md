@@ -1,4 +1,4 @@
-# Deterministic Card Battle: Rules & Mechanics Guide (Editable Draft)
+# Deterministic Card Battle: Rules & Mechanics Guide
 
 
 
