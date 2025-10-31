@@ -1,0 +1,187 @@
+.deck-sidebar {
+    flex: 0 0 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow: visible;
+    min-height: 0;
+}
+
+.deck-preview {
+    background-image: 
+        radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(0,0,0,0.5) 100%),
+        url('../images/wood.png');
+    background-size: cover;
+    background-position: center;
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1;
+    min-height: 0;
+    overflow: visible;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6),
+                inset 0 0 0 12px rgba(255,255,255,0.15);
+}
+
+.deck-preview h3 {
+    font-size: 1.2em;
+    border-bottom: 2px solid rgba(255,255,255,0.3);
+    padding-bottom: 10px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    text-shadow: 
+        -2px -2px 0 #000,
+        2px -2px 0 #000,
+        -2px 2px 0 #000,
+        2px 2px 0 #000,
+        -2px 0 0 #000,
+        2px 0 0 #000,
+        0 -2px 0 #000,
+        0 2px 0 #000;
+}
+
+.deck-count {
+    background: rgba(0,0,0,0.4);
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #ffd700;
+    border: 1px solid rgba(255,215,0,0.3);
+}
+
+.deck-list {
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+    min-height: 0;
+}
+
+.deck-card {
+    padding: 8px 12px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+.deck-card-mana {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.deck-mana-icon {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+}
+
+.deck-mana-value {
+    position: relative;
+    z-index: 1;
+    font-size: 11px;
+    font-weight: 900;
+    color: white;
+    text-shadow: 
+        -1px -1px 2px rgba(0, 0, 0, 0.8),
+        1px -1px 2px rgba(0, 0, 0, 0.8),
+        -1px 1px 2px rgba(0, 0, 0, 0.8),
+        1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.deck-card.drawing {
+    animation: card-draw 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+.deck-card:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateX(5px);
+}
+
+.deck-card.next-card {
+    background: rgba(0,0,0,0.6);
+    font-weight: bold;
+    border: 2px solid #ffd700;
+}
+
+.deck-card.too-expensive {
+    /* Red outline only shows during cannot-afford shake animation */
+}
+
+.deck-card.cannot-afford {
+    animation: cannot-afford-shake 0.5s ease;
+}
+
+.deck-card-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.1);
+}
+
+.deck-card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}
+
+.next-card-pill {
+    background: #ffd700;
+    color: #1a1a1a;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+.deck-card-stats {
+    font-size: 11px;
+    opacity: 0.8;
+}
+
+.deck-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.deck-list::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.2);
+    border-radius: 4px;
+}
+
+.deck-list::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.3);
+    border-radius: 4px;
+}
+
+.deck-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.5);
+}
+

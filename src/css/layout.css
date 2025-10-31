@@ -1,0 +1,100 @@
+.main-layout {
+    display: flex;
+    gap: 20px;
+    max-width: 1600px;
+    margin: 0 auto;
+    height: 100%;
+}
+
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow: visible;
+    min-height: 0;
+}
+
+.container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.container::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.2);
+    border-radius: 4px;
+}
+
+.container::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.3);
+    border-radius: 4px;
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.5);
+}
+
+.game-logo {
+    max-height: 80px;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
+    margin: 0 auto;
+    display: block;
+    flex-shrink: 0;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.7));
+}
+
+.controls-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-shrink: 0;
+}
+
+.game-controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: nowrap;
+}
+
+.turn-info-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-shrink: 0;
+}
+
+.turn-info {
+    font-size: 1em;
+    font-weight: bold;
+    padding: 8px 15px;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.debug-controls {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.btn-debug {
+    padding: 6px 12px !important;
+    font-size: 11px !important;
+    background: rgba(100, 100, 100, 0.6) !important;
+    border: 1px solid rgba(150, 150, 150, 0.4) !important;
+    opacity: 0.6;
+    transition: all 0.2s ease;
+}
+
+.btn-debug:hover:not(:disabled) {
+    background: rgba(130, 130, 130, 0.8) !important;
+    border-color: rgba(180, 180, 180, 0.6) !important;
+    opacity: 0.9;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4) !important;
+}
+

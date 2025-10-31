@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Battle Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/deck-sidebar.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/game-board.css">
+    <link rel="stylesheet" href="css/cards.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <div class="main-layout">
+        <!-- Deck Sidebar -->
+        <div class="deck-sidebar">
+            <div class="deck-preview">
+                <h3><span id="p1DeckName">Player 1</span> <span class="deck-count" id="p1DeckCount">20</span></h3>
+                <div class="deck-list" id="player1DeckList"></div>
+            </div>
+            <div class="deck-preview">
+                <h3><span id="p2DeckName">Player 2</span> <span class="deck-count" id="p2DeckCount">20</span></h3>
+                <div class="deck-list" id="player2DeckList"></div>
+            </div>
+        </div>
+
+        <!-- Main Game Area -->
+        <div class="container">
+            <img src="images/logo.png" alt="Card Battle Arena" class="game-logo">
+            
+            <div class="controls-container">
+                <div class="game-controls">
+                    <button id="startGameBtn" class="btn-success" onclick="startGame()">Start New Game</button>
+                    <button id="nextTurnBtn" class="btn-primary" onclick="nextTurn()" style="display: none;">Next Turn</button>
+                    <button id="autoplayBtn" class="btn-primary" onclick="toggleAutoplay()" style="display: none;">Auto Play</button>
+                </div>
+                <div class="turn-info-container">
+                    <div class="turn-info" id="turnInfo">Click "Start New Game" to begin</div>
+                    <div class="debug-controls">
+                        <button class="btn-debug" onclick="debugP1Win()">P1 Win</button>
+                        <button class="btn-debug" onclick="debugP2Win()">P2 Win</button>
+                        <button class="btn-debug" onclick="debugDraw()">Draw</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-board" id="gameBoard">
+
+                <!-- Player 1 -->
+                <div class="player-section">
+                    <div class="player-info">
+                        <div class="player-name" id="p1Name">Player 1</div>
+                        <div class="hp-mana-row">
+                            <div class="hp-container">
+                                <div class="hp-bar">
+                                    <div class="hp-fill healthy" id="p1HpBar" style="width: 100%;"></div>
+                                    <span id="p1HpText"></span>
+                                </div>
+                            </div>
+                            <div class="mana-display">
+                                <img src="images/mana.png" alt="Mana" class="mana-icon">
+                                <span class="mana-text" id="p1ManaText">0/0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-row" id="player1Field"></div>
+                </div>
+
+                <div class="vs-divider"></div>
+
+                <!-- Player 2 -->
+                <div class="player-section">
+                    <div class="card-row" id="player2Field"></div>
+                    <div class="player-info">
+                        <div class="player-name" id="p2Name">Player 2</div>
+                        <div class="hp-mana-row">
+                            <div class="hp-container">
+                                <div class="hp-bar">
+                                    <div class="hp-fill healthy" id="p2HpBar" style="width: 100%;"></div>
+                                    <span id="p2HpText"></span>
+                                </div>
+                            </div>
+                            <div class="mana-display">
+                                <img src="images/mana.png" alt="Mana" class="mana-icon">
+                                <span class="mana-text" id="p2ManaText">0/0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/constants.js"></script>
+    <script src="js/models/Card.js"></script>
+    <script src="js/models/Player.js"></script>
+    <script src="js/models/Game.js"></script>
+    <script src="js/deck-builders.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
+
